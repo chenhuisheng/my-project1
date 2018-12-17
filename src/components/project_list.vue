@@ -7,9 +7,9 @@
                 <td>title</td>
             </tr>
             <tr v-for="detail in details" :key="detail.id" >
-                <td>{{detail[0].name}}</td>
+                <td>{{detail.name}}</td>
                 <td>
-                <router-link :to="{ name: 'path', params: { item: detail[0] }}">{{detail[0].title}}</router-link>
+                <router-link :to="{ name: 'path', params: { item: detail }}">{{detail.title}}</router-link>
                 </td>
             </tr>
         </table>
@@ -48,12 +48,12 @@
                             var name=result.data[0].name
                         }
                         else{var name=''}
-                        this.details.push([{
+                        this.details.push({
                             id: this.articles[i].id,
                             title: this.articles[i].title,
                             body:this.articles[i].title,
                             name: name
-                            }])
+                            })
                         })
             }
         }
