@@ -1,12 +1,13 @@
 <template>
     <!-- <div id="app" @click="getAllList($event)"> -->
     <div>
+        <h6>{{userid}}</h6>
         <table class="table table-bordered table-hover table-stripet">
             <tr>
                 <td>name</td>
                 <td>title</td>
             </tr>
-            <tr v-for="detail in details" :key="detail.id" >
+            <tr v-for="detail in articles" :key="detail.id" >
                 <td>{{detail.name}}</td>
                 <td>
                 <router-link :to="{ name: 'path', params: { item: detail }}">{{detail.title}}</router-link>
@@ -24,37 +25,35 @@
             return {
                 details:[],
                 articles:[],
-                author:[]
+                author:[],
+                userid:''
             }
         },
         created(){
                     this.getAllList()
                 },
         methods:{
-            getAllList(){
-                axios.get("https://jsonplaceholder.typicode.com/posts").then(result=>{
-                    this.articles=result.data,
-                    this.getUser()});
+            async getAllList(){
+                var articles = await axios.get("https://jsonplaceholder.typicode.com/posts")
+                    this.articles=articles.data
+                    this.getUser()
+            },
+            async getAuthor(id, i){
+                var author = await axios.get("https://jsonplaceholder.typicode.com/users", {params:{id}})
+                this.author=author.data
+                this.userid=this.articles[i].userId
+                this.articles[i].name=this.author[0].name
             },
             getUser(){
                 for (var i=0; i<this.articles.length; i++){
+                    if( this.articles[i].userId != this.userid){
                         this.getAuthor(this.articles[i].userId, i)
                     }
-            },
-            getAuthor(id, i){
-                axios.get("https://jsonplaceholder.typicode.com/users", {params:{id}}).then(result=>{
-                        this.author=result.data
-                        if(result.data[0]){
-                            var name=result.data[0].name
-                        }
-                        else{var name=''}
-                        this.details.push({
-                            id: this.articles[i].id,
-                            title: this.articles[i].title,
-                            body:this.articles[i].title,
-                            name: name
-                            })
-                        })
+                    else{
+                        this.articles[i].name=this.author[0].name
+                    }
+                    
+                }
             }
         }
         }
