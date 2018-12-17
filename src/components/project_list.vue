@@ -46,12 +46,7 @@
             },
             getUser(){
                 for (var i=0; i<this.articles.length; i++){
-                    if( this.articles[i].userId != this.userid){
                         this.getAuthor(this.articles[i].userId, i)
-                    }
-                    else{
-                        this.articles[i].name=this.author[0].name
-                    }
                     
                 }
             }
