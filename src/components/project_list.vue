@@ -15,6 +15,9 @@
         <h3>第{{page}}页</h3>
         <button v-if="page!=1" @click="page -=1; getAllList()" >上一页</button>
         <button v-if="page<20" @click="page +=1; getAllList()">下一页</button>
+        <form v-on:submit.prevent='page=data; getAllList()'>
+            <a><input type="text" v-model="data"></a>
+        </form>
     </div>
 </template>
 
@@ -28,6 +31,7 @@
                 articles: [],
                 author: [],
                 page: 1,
+                data:''
             }
         },
         created(){
