@@ -1,6 +1,6 @@
 <template>
     <div id="project">
-        <h5><a href="http://localhost:8080/#/project">返回</a> id: {{data.id}} 标题： {{data.title}} </h5>
+        <h5><a href="http://localhost:8080/#/project">返回</a> name: {{data.name}} 标题： {{data.title}} </h5>
         <h5> 内容： {{data.body}}</h5>
         <table class="table table-bordered table-hover table-stripet">
             <tr>

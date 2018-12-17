@@ -6,10 +6,10 @@
                 <td>name</td>
                 <td>title</td>
             </tr>
-            <tr v-for="item in times" :key="item.id" >
-                <td>{{item.name}}</td>
+            <tr v-for="detail in details" :key="detail.id" >
+                <td>{{detail[0].name}}</td>
                 <td>
-                <router-link :to="{ name: 'path', params: { item: item }}">{{item.title}}</router-link>
+                <router-link :to="{ name: 'path', params: { item: detail[0] }}">{{detail[0].title}}</router-link>
                 </td>
             </tr>
         </table>
@@ -22,10 +22,9 @@
         name: 'project_list',
         data () {
             return {
-                times:[],
-                data:[],
-                ment:[],
-                item:''
+                details:[],
+                articles:[],
+                author:[]
             }
         },
         created(){
@@ -34,25 +33,27 @@
         methods:{
             getAllList(){
                 axios.get("https://jsonplaceholder.typicode.com/posts").then(result=>{
-                    this.data=result.data,
-                    this.get_user()});
+                    this.articles=result.data,
+                    this.getUser()});
             },
-            get_user(){
-                for (var i=0; i<this.data.length; i++){
-                    var id = this.data[i].userId
-                    this.get_ment(id, i)
+            getUser(){
+                for (var i=0; i<this.articles.length; i++){
+                        this.getAuthor(this.articles[i].userId, i)
                     }
             },
-            get_ment(id, i){
+            getAuthor(id, i){
                 axios.get("https://jsonplaceholder.typicode.com/users", {params:{id}}).then(result=>{
-                        this.ment=result.data;
-                        var name =result.data[0].name;
-                        this.times.push({
-                            id: this.data[i].id,
-                            title: this.data[i].title,
-                            body:this.data[i].title,
+                        this.author=result.data
+                        if(result.data[0]){
+                            var name=result.data[0].name
+                        }
+                        else{var name=''}
+                        this.details.push([{
+                            id: this.articles[i].id,
+                            title: this.articles[i].title,
+                            body:this.articles[i].title,
                             name: name
-                            })
+                            }])
                         })
             }
         }
