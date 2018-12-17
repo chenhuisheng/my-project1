@@ -18,7 +18,7 @@
 <script>
     import axios from "axios"
     export default {
-        name: 'path',
+        name: 'Details',
         data () {
             return {
                 data:'',
@@ -26,17 +26,18 @@
             }
         },
         created(){
-            this.getAllList(),
-            this.path()
+            this.path(),
+            this.getAllList()
         },
         methods:{
             getAllList(){
-                axios.get("https://jsonplaceholder.typicode.com/comments").then(result=>{
+                var postId=this.$route.params.item.id
+                axios.get("https://jsonplaceholder.typicode.com/comments", {params:{postId: postId}}).then(result=>{
                     this.items=result.data
                 })
             },
             path(){
-                this.data=this.$route.params.item
+                this.data= this.$route.params.item
             }
         },
         }

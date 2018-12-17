@@ -1,18 +1,20 @@
 <template>
-    <!-- <div id="app" @click="getAllList($event)"> -->
     <div>
         <table class="table table-bordered table-hover table-stripet">
             <tr>
                 <td>name</td>
                 <td>title</td>
             </tr>
-            <tr v-for="detail in details" :key="detail.id" >
+            <tr v-for="detail in articles" :key="detail.id" >
                 <td>{{detail.name}}</td>
                 <td>
-                <router-link :to="{ name: 'path', params: { item: detail }}">{{detail.title}}</router-link>
+                <router-link :to="{ name: 'Details', params: { item: detail }}">{{detail.title}}</router-link>
                 </td>
             </tr>
         </table>
+        <h3>第{{page}}页</h3>
+        <button v-if="page!=1" @click="page -=1; getAllList()" >上一页</button>
+        <button v-if="page<20" @click="page +=1; getAllList()">下一页</button>
     </div>
 </template>
 
@@ -22,9 +24,10 @@
         name: 'project_list',
         data () {
             return {
-                details:[],
-                articles:[],
-                author:[]
+                details: [],
+                articles: [],
+                author: [],
+                page: 1,
             }
         },
         created(){
@@ -32,7 +35,7 @@
                 },
         methods:{
             async getAllList(){
-                var articles = await axios.get("https://jsonplaceholder.typicode.com/posts")
+                var articles = await axios.get("https://jsonplaceholder.typicode.com/posts", {params: {_limit: 5, _page: this.page}})
                     this.articles=articles.data
                     this.getUser()
             },
@@ -40,12 +43,7 @@
                 var author = await axios.get("https://jsonplaceholder.typicode.com/users", {params:{id}})
                 this.author=author.data
                 this.userid=this.articles[i].userId
-                this.details.push({
-                    id: this.articles[i].id,
-                    title: this.articles[i].title,
-                    body:this.articles[i].title,
-                    name: this.author[0].name
-                    })
+                this.$set(this.articles[i], 'name', this.author[0].name)
             },
             getUser(){
                 for (var i=0; i<this.articles.length; i++){
