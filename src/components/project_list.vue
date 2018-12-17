@@ -5,6 +5,7 @@
                 <td>name</td>
                 <td>title</td>
             </tr>
+            <h6>{{page}}</h6>
             <tr v-for="detail in articles" :key="detail.id" >
                 <td>{{detail.name}}</td>
                 <td>
@@ -15,9 +16,9 @@
         <h3>第{{page}}页</h3>
         <button v-if="page!=1" @click="page -=1; getAllList()" >上一页</button>
         <button v-if="page<20" @click="page +=1; getAllList()">下一页</button>
-        <form v-on:submit.prevent='page=data; getAllList()'>
-            <a><input type="text" v-model="data"></a>
-        </form>
+        <!-- <form @keyup.enter='page=data; getAllList()'>
+            <input type="text" v-model="data">
+        </form> -->
     </div>
 </template>
 
