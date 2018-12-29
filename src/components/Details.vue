@@ -1,21 +1,23 @@
 <template>
     <div id="project">
         <button type="button" class="btn btn-xs"><a href="http://localhost:8080/#/project">返回</a></button>
-        <div>
-            <div class="card">
-                <h5>{{data.title}}</h5>
-                2018-12-28 12:41:52<br/>
-                <div>
-                    <div style="float: left;"><span class="glyphicon glyphicon-user"></span>{{data.name}}</div>
-                    <div style="float: right">{{data.count}}</div><div style="clear: both;"></div>
+        <div class="container">
+            <div>
+                <div class="card card-body">
+                    <h5>{{data.title}}</h5>
+                    2018-12-28 12:41:52<br/>
+                    <div>
+                        <i class="fas fa-user"></i>{{data.name}}
+                    </div>
+                    <p>{{data.body}}</p>
+                    <div class="text-right">{{data.count}}</div>
+                </div><br>
+                <h5>评论详情</h5>
+                <div class="card card-body" v-for="item in items" :key="item.id" v-show="item.postId === data.id">
+                    <div><i class="fas fa-user"></i>{{item.name}}</div>
+                    <p><i class="fas fa-comment-dots"></i>{{item.body}}</p>
+                    <div class="text-right">2018-12-29 10:09:55</div>
                 </div>
-                <p>{{data.body}}</p>
-            </div><br>
-            <h5>评论详情</h5>
-            <div class="card" v-for="item in items" :key="item.id" v-show="item.postId === data.id">
-                <div><span class="glyphicon glyphicon-user"></span>{{item.name}}</div>
-                <p>{{item.body}}</p>
-                <div class="text-right">2018-12-29 10:09:55</div>
             </div>
         </div>
     </div>
