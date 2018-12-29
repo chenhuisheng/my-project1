@@ -4,8 +4,8 @@
         <div class="container">
             <div>
                 <div class="card card-body">
-                    <h5>{{data.title}}</h5>
-                    2018-12-28 12:41:52<br/>
+                    <my-title v-bind:title="data.title"></my-title>
+                    2018-12-28 12:41:52
                     <div>
                         <i class="fas fa-user"></i>{{data.name}}
                     </div>
@@ -30,7 +30,7 @@
         data () {
             return {
                 data:'',
-                items:''
+                items:'',
             }
         },
         created(){
@@ -48,6 +48,12 @@
                 this.data= this.$route.params.item
             }
         },
+        components: {
+            'my-title':{
+                template:`<h5>{{title}}</h5><br/>`,
+                props:['title']   
+            }
+        }
         }
 </script>
 

@@ -6,7 +6,7 @@
                 2018-12-28 12:41:52<br/>
                 <div>
                     <div style="float: left;"><i class="fas fa-user"></i>{{detail.name}}</div>
-                    <div style="float: right">{{detail.count}}</div><div style="clear: both;"></div>
+                    <div class="float-right">{{detail.count}}</div>
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@
                     this.getcomments(this.articles[i].id, i)
                 }
             }
-        }
+        },
         }
 </script>
 
