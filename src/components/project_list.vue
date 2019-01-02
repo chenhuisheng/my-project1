@@ -4,10 +4,7 @@
             <div class="card card-body">
                 <router-link :to="{ name: 'Details', params: { item: detail }}">{{detail.title}}</router-link>
                 2018-12-28 12:41:52<br/>
-                <div>
-                    <div style="float: left;"><i class="fas fa-user"></i>{{detail.name}}</div>
-                    <div class="float-right">{{detail.count}}</div>
-                </div>
+                <project1 v-bind:name="detail.name" v-bind:count="detail.count"></project1>
             </div>
         </div>
         <h3>第{{page}}页</h3>
@@ -35,6 +32,7 @@
             async getAllList(){
                 var articles = await axios.get("https://jsonplaceholder.typicode.com/posts", {params: {_limit: 5, _page: this.page}})
                     this.articles=articles.data
+                    console.log(articles)
                     this.getUser()
             },
             async getAuthor(id, i){
@@ -54,6 +52,14 @@
                 }
             }
         },
+        components:{
+            'project1': {
+                template: `<div>
+                    <div style="float: left;"><i class="fas fa-user"></i>{{name}}</div>
+                    <div class="float-right">{{count}}</div>
+                </div>`,
+                props: ['name', 'count']
+        }}
         }
 </script>
 
